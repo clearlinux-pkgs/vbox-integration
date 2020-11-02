@@ -4,7 +4,7 @@
 #
 Name     : vbox-integration
 Version  : 3
-Release  : 3
+Release  : 4
 URL      : https://github.com/clearlinux/vbox-integration/archive/v3.tar.gz
 Source0  : https://github.com/clearlinux/vbox-integration/archive/v3.tar.gz
 Summary  : No detailed summary available
@@ -35,23 +35,27 @@ license components for the vbox-integration package.
 
 %prep
 %setup -q -n vbox-integration-3
+cd %{_builddir}/vbox-integration-3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1558652342
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604356419
 export GCC_IGNORE_WERROR=1
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1558652342
+export SOURCE_DATE_EPOCH=1604356419
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/vbox-integration
-cp COPYING %{buildroot}/usr/share/package-licenses/vbox-integration/COPYING
+cp %{_builddir}/vbox-integration-3/COPYING %{buildroot}/usr/share/package-licenses/vbox-integration/4cc77b90af91e615a64ae04893fdffa7939db84c
 %make_install
 
 %files
@@ -63,4 +67,4 @@ cp COPYING %{buildroot}/usr/share/package-licenses/vbox-integration/COPYING
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/vbox-integration/COPYING
+/usr/share/package-licenses/vbox-integration/4cc77b90af91e615a64ae04893fdffa7939db84c
